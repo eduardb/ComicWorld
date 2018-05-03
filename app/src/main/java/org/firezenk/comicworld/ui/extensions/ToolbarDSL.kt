@@ -12,7 +12,6 @@ class ItemBuilder {
     lateinit var action: () -> Unit
     var id: Int = 0
 
-    fun build() = id to action
 }
 
 @ToolbarDsl
@@ -62,16 +61,17 @@ class ToolbarBuilder {
         return toolbar
     }
 
-    fun item(id: Int = 0, setup: ItemBuilder.() -> Unit) = ItemBuilder().apply {
-        this.id = id
-        setup()
-    }.build()
+    fun item(id: Int = 0, setup: ItemBuilder.() -> Unit) {
+        val item = ItemBuilder().apply {
+            this.id = id
+            setup()
+        }
+        items[item.id] = item.action
+    }
 
     fun back(setup: BackBuilder.() -> Unit) {
         back = BackBuilder().apply(setup)
     }
-
-    operator fun Pair<Int, () -> Unit>.unaryPlus() = items.put(this.first, this.second)
 }
 
 @ToolbarDsl
@@ -82,9 +82,10 @@ fun toolbarDSL(setup: ToolbarBuilder.() -> Unit) {
     }
 }
 
-fun Toolbar.dsl(setup: ToolbarBuilder.() -> Unit) {
+@ToolbarDsl
+operator fun Toolbar.invoke(setup: ToolbarBuilder.() -> Unit) {
     with(ToolbarBuilder()) {
-        toolbar = this@dsl
+        toolbar = this@invoke
         setup()
         build()
     }

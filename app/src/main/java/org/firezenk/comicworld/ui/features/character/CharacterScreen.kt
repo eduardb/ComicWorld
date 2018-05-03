@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.include_toolbar.view.*
 import org.firezenk.comicworld.ComicWorldApp.Companion.component
 import org.firezenk.comicworld.R
-import org.firezenk.comicworld.ui.extensions.dsl
+import org.firezenk.comicworld.ui.extensions.invoke
 import org.firezenk.comicworld.ui.extensions.toast
 import org.firezenk.comicworld.ui.features.character.di.CharacterModule
 import org.firezenk.comicworld.ui.features.commons.Screen
@@ -34,7 +34,7 @@ class CharacterScreen @JvmOverloads constructor(context: Context, attrs: Attribu
 
         lifecycle.addObserver(this)
 
-        toolbar.dsl {
+        toolbar {
             back {
                 action = { presenter reduce actions.back { (context as Activity).onBackPressed() } }
             }
@@ -52,7 +52,7 @@ class CharacterScreen @JvmOverloads constructor(context: Context, attrs: Attribu
     override fun render(state: CharacterStates) {
         when(state) {
             is CharacterStates.Loaded -> {
-                toolbar.dsl {
+                toolbar {
                     title = state.name
                 }
             }

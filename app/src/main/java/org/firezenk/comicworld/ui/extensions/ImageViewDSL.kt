@@ -23,9 +23,9 @@ class ImageViewBuilder {
     }
 }
 
-fun ImageView.dsl(setup: ImageViewBuilder.() -> Unit) {
+fun ImageView.invoke(setup: ImageViewBuilder.() -> Unit) {
     with(ImageViewBuilder()) {
-        imageView = this@dsl
+        imageView = this@invoke
         setup()
         build()
     }

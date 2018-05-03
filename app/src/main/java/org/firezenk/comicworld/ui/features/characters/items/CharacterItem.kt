@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.screen_characters_item.view.*
 import org.firezenk.comicworld.R
 import org.firezenk.comicworld.domain.models.CharacterModel
 import org.firezenk.comicworld.ui.extensions.BindableView
-import org.firezenk.comicworld.ui.extensions.dsl
+import org.firezenk.comicworld.ui.extensions.invoke
 
 class CharacterItem constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : ConstraintLayout(context, attrs, defStyleAttr), BindableView<CharacterModel> {
@@ -23,7 +23,7 @@ class CharacterItem constructor(context: Context, attrs: AttributeSet? = null, d
         name.text = model.name
         description.text = model.description
 
-        avatar.dsl {
+        avatar.invoke {
             url = model.avatarUrl
             strategy = DiskCacheStrategy.ALL
         }

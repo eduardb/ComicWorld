@@ -14,7 +14,7 @@ import org.firezenk.comicworld.R
 import org.firezenk.comicworld.domain.models.CharacterModel
 import org.firezenk.comicworld.ui.extensions.DSLAdapter
 import org.firezenk.comicworld.ui.extensions.adapterDSL
-import org.firezenk.comicworld.ui.extensions.dsl
+import org.firezenk.comicworld.ui.extensions.invoke
 import org.firezenk.comicworld.ui.extensions.toast
 import org.firezenk.comicworld.ui.features.characters.di.CharactersModule
 import org.firezenk.comicworld.ui.features.characters.items.CharacterItem
@@ -54,7 +54,7 @@ class CharactersScreen @JvmOverloads constructor(context: Context, attrs: Attrib
 
         list.adapter = adapter
 
-        toolbar.dsl {
+        toolbar {
             title = R.string.app_name
             back {
                 action = {
@@ -62,13 +62,13 @@ class CharactersScreen @JvmOverloads constructor(context: Context, attrs: Attrib
                 }
             }
             menu = R.menu.menu_characters
-            +item {
+            item {
                 id = R.id.characters_refresh
                 action = {
                     presenter reduce actions.loadCharacters()
                 }
             }
-            +item {
+            item {
                 id = R.id.characters_exit
                 action = {
                     (context as Activity).finish()
