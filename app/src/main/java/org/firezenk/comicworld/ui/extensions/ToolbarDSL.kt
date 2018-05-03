@@ -37,7 +37,7 @@ class ToolbarBuilder {
     lateinit var title: Any
     var back: BackBuilder? = null
     var menu: Int = 0
-    var items = mutableListOf<Pair<Int, () -> Unit>>()
+    var items = mutableMapOf<Int, () -> Unit>()
 
     fun build(): Toolbar {
         if (::title.isInitialized && title != 0) {
@@ -55,9 +55,7 @@ class ToolbarBuilder {
         back?.setup(toolbar)
 
         toolbar.setOnMenuItemClickListener {
-            items.firstOrNull { item -> it.itemId == item.first }
-                    ?.second
-                    ?.invoke()
+                        items[it.itemId]?.invoke()
             true
         }
 
@@ -73,7 +71,7 @@ class ToolbarBuilder {
         back = BackBuilder().apply(setup)
     }
 
-    operator fun Pair<Int, () -> Unit>.unaryPlus() = items.add(this)
+    operator fun Pair<Int, () -> Unit>.unaryPlus() = items.put(this.first, this.second)
 }
 
 @ToolbarDsl
