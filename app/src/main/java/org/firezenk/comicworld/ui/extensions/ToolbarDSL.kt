@@ -75,14 +75,6 @@ class ToolbarBuilder {
 }
 
 @ToolbarDsl
-fun toolbarDSL(setup: ToolbarBuilder.() -> Unit) {
-    with(ToolbarBuilder()) {
-        setup()
-        build()
-    }
-}
-
-@ToolbarDsl
 operator fun Toolbar.invoke(setup: ToolbarBuilder.() -> Unit) {
     with(ToolbarBuilder()) {
         toolbar = this@invoke
